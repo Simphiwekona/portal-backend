@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -57,6 +58,12 @@ public class EmployeeService {
     }
     public List<Employee> getAllEmployee() {
        List<Employee> employees = firebaseService.getAllEmployees();
+
+//       employees.forEach(employee -> {
+//           if (employee.getDocumentId() == null){
+//               employee.setDocumentId(UUID.randomUUID().toString());
+//           }
+//       });
         return employees;
     }
 }

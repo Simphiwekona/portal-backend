@@ -2,10 +2,13 @@ package com.example.server.controller;
 
 import com.example.server.entity.Employee;
 import com.example.server.service.EmployeeService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -15,13 +18,18 @@ public class EmployeeController {
 
     public EmployeeService employeeService;
 
+    //In-memory storage
+    private final Map<String, Employee> employeeMap = new HashMap<>();
+
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
     @PostMapping("/create")
-    public String createEmployee(@RequestBody Employee employee) throws InterruptedException, ExecutionException {
-        return employeeService.createEmployee(employee);
+    public ResponseEntity<String> createEmployee(@RequestBody Employee employee) throws InterruptedException, ExecutionException {
+        employeeMap.put(employee.getDocumentId(), employee);
+        employeeService.createEmployee(employee);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Employee created successfully");
     }
     @GetMapping("/get")
     public Employee getEmployee(@RequestParam String documentId) throws InterruptedException, ExecutionException {
