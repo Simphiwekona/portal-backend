@@ -23,7 +23,7 @@ public class ServerApplication {
 
 		FirebaseOptions options = new FirebaseOptions.Builder()
 				.setCredentials(GoogleCredentials.fromStream(serviceAccount))
-				.setDatabaseUrl("https://glomo-assessment-default-rtdb.firebaseio.com")
+				.setDatabaseUrl("https://assessment-portal-48396-default-rtdb.firebaseio.com")
 				.build();
 
 		FirebaseApp.initializeApp(options);
